@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Buffer Order</key>
+	<array>
+		<string>Main.lua</string>
+	</array>
+	<key>Runtime Type</key>
+	<string>modern</string>
+	<key>Selected Buffer</key>
+	<dict>
+		<key>bufferId</key>
+		<string>Main.lua</string>
+	</dict>
+	<key>Tint Color</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwdVSRudWxs2A0ODxAREhMU
+	FRYXGBkaGxxfEBVVSUNvbG9yQ29tcG9uZW50Q291bnRXVUlHcmVlblZVSUJsdWVXVUlB
+	bHBoYVVOU1JHQlYkY2xhc3NVVUlSZWRcTlNDb2xvclNwYWNlEAQiPiioACI/PLwAIgAA
+	AABPEBMwLjU5NiAwLjE2NSAwLjczNyAwgAIiPxiYABAC0x4fICEiJFokY2xhc3NuYW1l
+	WCRjbGFzc2VzWyRjbGFzc2hpbnRzV1VJQ29sb3KiISNYTlNPYmplY3ShJVdOU0NvbG9y
+	AAgAEQAaACQAKQAyADcASQBMAFEAUwBXAF0AbgCGAI4AlQCdAKMAqgCwAL0AvwDEAMkA
+	zgDkAOYA6wDtAPQA/wEIARQBHAEfASgBKgAAAAAAAAIBAAAAAAAAACYAAAAAAAAAAAAA
+	AAAAAAEy
+	</data>
+</dict>
+</plist>
