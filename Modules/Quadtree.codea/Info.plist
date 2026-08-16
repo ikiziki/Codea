@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Buffer Order</key>
+	<array>
+		<string>Main.lua</string>
+	</array>
+	<key>ProjectID</key>
+	<string>0FFBC014-80B5-488F-9C72-2DE897A5CF96</string>
+	<key>Runtime Type</key>
+	<string>modern</string>
+</dict>
+</plist>
