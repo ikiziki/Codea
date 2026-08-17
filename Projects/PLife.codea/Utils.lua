@@ -32,7 +32,7 @@ function cycleDrawMode()
     end
     print("draw Mode =", drawMode)
 end
-parameter.action("cycleMode", cycleDrawMode)
+parameter.action("Cycle Mode", cycleDrawMode)
 
 -- returns a random whole number between min/max
 function rInt(min, max)

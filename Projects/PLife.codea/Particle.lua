@@ -52,13 +52,13 @@ end
 function Particle:drawEllipse()
     pushStyle()
     if self.selected then
-        stroke(255, 255, 255)
-        strokeWidth(2)
+        stroke(255, 0, 0)
+        strokeWidth(1)
     else
         noStroke()
     end
     fill(self.color[1], self.color[2], self.color[3])
-    ellipse(self.x, self.y, self.radius * 2)
+    ellipse(self.x, self.y, self.radius)
     popStyle()
 end
 
@@ -99,9 +99,9 @@ function Particle:drawNoFill()
         strokeWidth(2)
     else
         stroke(self.color[1], self.color[2], self.color[3])
-        strokeWidth(1)
+        strokeWidth(2)
     end
-    ellipse(self.x, self.y, self.radius * 2) 
+    ellipse(self.x, self.y, self.radius) 
     popStyle()
 end
 
@@ -112,15 +112,15 @@ function Particle:drawAllSolid()
     if te.style == 1.0 then
         style = color(35)
     elseif te.style == 2.0 then
-        style = color(235)
+        style = color(220)
     end   
     fill(style)   
     if self.selected then
-        stroke(255)
+        stroke(255,0,0)
         strokeWidth(2)
     else
         noStroke()
     end  
-    ellipse(self.x, self.y, self.radius * 2) 
+    ellipse(self.x, self.y, self.radius) 
     popStyle()
 end

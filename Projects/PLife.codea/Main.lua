@@ -40,7 +40,7 @@ function draw()
     end
         
     -- Draw quadtree boundaries for debugging
-    qt:draw()
+    -- qt:draw()
     
     -- Draw touch search range
     if touchX and touchY then
@@ -69,5 +69,9 @@ function touched(touch)
             particle.selected = true
         end
         print("Found: " .. #lastQuery)
+    end
+    if touch.state == ENDED then
+        touchX = nil
+        touchY = nil
     end
 end
