@@ -10,12 +10,14 @@ function setup()
     qt = Quadtree(0, 0, WIDTH, HEIGHT, 10, 0, 4)
     setupRules()
     
+    -- test with 250 particles
     for i = 1, 250 do
         local particle = Particle()
         particle.x = rX()
         particle.y = rY()
         qt:insert(particle)
     end
+    
 end
 
 function update(dt)

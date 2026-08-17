@@ -51,46 +51,32 @@ end
 -- draws the particle as an ellipse
 function Particle:drawEllipse()
     pushStyle()
-    noStroke()
-    
     if self.selected then
-        fill(255, 255, 255)
-        ellipse(self.x, self.y, self.radius * 4)
+        stroke(255, 255, 255)
+        strokeWidth(2)
+    else
+        noStroke()
     end
-    
     fill(self.color[1], self.color[2], self.color[3])
     ellipse(self.x, self.y, self.radius * 2)
-    
     popStyle()
 end
 
 -- draws the particle as a heading triangle
 function Particle:drawHeading()
     pushStyle()
-    noStroke()
-    
+    if self.selected then
+        stroke(255, 255, 255)
+        strokeWidth(2)
+    else
+        noStroke()
+    end
+    fill(self.color[1], self.color[2], self.color[3])
     local angle = math.atan(self.vY, self.vX)
-    
     pushMatrix()
     translate(self.x, self.y)
     rotate(math.deg(angle))
-    
-    if self.selected then
-        fill(255, 255, 255)
-        triangle(
-        self.radius * 2, 0,
-        -self.radius * 2, -self.radius * 1.2,
-        -self.radius * 2, self.radius * 1.2
-        )
-    end
-    
-    fill(self.color[1], self.color[2], self.color[3])
-    triangle(
-    self.radius, 0,
-    -self.radius, -self.radius * 0.6,
-    -self.radius, self.radius * 0.6
-    )
-    
+    triangle(self.radius, 0,-self.radius, -self.radius * 0.6,-self.radius, self.radius * 0.6)
     popMatrix()
     popStyle()
 end
