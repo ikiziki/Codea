@@ -35,22 +35,12 @@ function Particle:init(x, y, type)
     self.aY = 0         -- y acceleration
     self.fX = 0         -- x force
     self.fY = 0         -- y force
-    self.lifespan = 1   -- lifespan can be affected in the sim
     self.maxSpeed = 5   -- maximum particle speed
     self.maxForce = 1   -- maximum force that can be applied
     self.mass = 1       -- particle mass
     self.radius = 5     -- particle size
     self.type = type or setType()      -- particle type
     self.color = getTypeColor(self.type) -- particle color
-    self.active = true                 -- is this particle currently active
-end
-
--- reduces particle lifespan
-function Particle:decay()
-end
-
--- expires the particle
-function Particle:expire()
 end
 
 -- updates the particle
