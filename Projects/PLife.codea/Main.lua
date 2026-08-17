@@ -27,7 +27,7 @@ end
 function draw()
     -- Draw all particles
     qt:forEach(function(particle)
-        particle:drawEllipse()
+        particle:drawHeading()
     end)
     
     -- Draw quadtree boundaries for debugging
