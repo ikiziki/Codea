@@ -1,47 +1,59 @@
--- quadtree for performance scaling
+-- particle life playground
 -- chris geese @ 2026
 
 function setup()
     te = ThemeEngine()
     qt = Quadtree(0, 0, WIDTH, HEIGHT, 10, 0, 4)
     setupRules()
-
-    -- test with 250 particles
+    particles = {}
+    lastQuery = {}
+    fps = 0
+    frameCount = 0
+    fpsTime = ElapsedTime
+    -- Create particles
     for i = 1, 250 do
         local particle = Particle()
-        particle.x = rX()
-        particle.y = rY()
+        particles[#particles + 1] = particle
         qt:insert(particle)
-    end 
+    end
 end
 
 function update(dt)
     updateTheme()
+    -- Update FPS
+    frameCount = frameCount + 1
+    if ElapsedTime - fpsTime >= 1 then
+        fps = frameCount
+        frameCount = 0
+        fpsTime = ElapsedTime
+        print("FPS: " .. fps)
+    end
+    -- Update particles
+    for _, particle in ipairs(particles) do
+        particle:update(dt, qt)
+    end
+    -- Rebuild QuadTree
+    qt:clear()
+    for _, particle in ipairs(particles) do
+        qt:insert(particle)
+    end
 end
 
 function draw()
-    -- Draw all particles
-    if drawMode == 1 then
-        qt:forEach(function(particle)
+    -- Draw particles
+    for _, particle in ipairs(particles) do
+        if drawMode == 1 then
             particle:drawEllipse()
-        end)
-    elseif drawMode == 2 then
-        qt:forEach(function(particle)
+        elseif drawMode == 2 then
             particle:drawHeading()
-        end)
-    elseif drawMode == 3 then
-        qt:forEach(function(particle)
+        elseif drawMode == 3 then
             particle:drawNoFill()
-        end)
-    elseif drawMode == 4 then
-        qt:forEach(function(particle)
+        elseif drawMode == 4 then
             particle:drawAllSolid()
-        end)
+        end
     end
-        
     -- Draw quadtree boundaries for debugging
     -- qt:draw()
-    
     -- Draw touch search range
     if touchX and touchY then
         pushStyle()
@@ -61,7 +73,7 @@ function touched(touch)
         for _, particle in ipairs(lastQuery) do
             particle.selected = false
         end
-        -- Query the quadtree
+        -- Query QuadTree
         local finder = circFinder(touch.x, touch.y, 100)
         lastQuery = qt:query(finder)
         -- Highlight query results
