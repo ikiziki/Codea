@@ -1,12 +1,6 @@
 -- helper functions
 -- chris geese @ 2026
 
--- parameters
-function showParameters()
-    parameter.watch("te.style")
-    parameter.watch("qt")
-end
-
 -- close debug window by default
 viewer.mode = FULLSCREEN
 

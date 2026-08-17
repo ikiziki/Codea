@@ -2,9 +2,9 @@
 -- chris geese @ 2026
 
 function setup()
-    showParameters() -- for debugging
     te = ThemeEngine()
     qt = Quadtree(0,0,WIDTH,HEIGHT,10,0,4)
+    setupRules()
 end
 
 function update(dt)
