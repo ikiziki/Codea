@@ -89,3 +89,38 @@ function Particle:drawHeading()
     popMatrix()
     popStyle()
 end
+
+-- draw with no fill
+function Particle:drawNoFill()
+    pushStyle() 
+    noFill()
+    if self.selected then
+        stroke(255)
+        strokeWidth(2)
+    else
+        stroke(self.color[1], self.color[2], self.color[3])
+        strokeWidth(1)
+    end
+    ellipse(self.x, self.y, self.radius * 2) 
+    popStyle()
+end
+
+-- draw as theme style 
+function Particle:drawAllSolid()
+    pushStyle()
+    local style
+    if te.style == 1.0 then
+        style = color(35)
+    elseif te.style == 2.0 then
+        style = color(235)
+    end   
+    fill(style)   
+    if self.selected then
+        stroke(255)
+        strokeWidth(2)
+    else
+        noStroke()
+    end  
+    ellipse(self.x, self.y, self.radius * 2) 
+    popStyle()
+end

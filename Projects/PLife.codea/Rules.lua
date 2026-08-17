@@ -73,6 +73,8 @@ GRules = {
 
 -- Create Codea parameters
 function setupRules()
+    parameter.action("Randomize Rules", randomRules)
+    parameter.action("Reset Rules", resetRules)
     parameter.number("AA", -1.0, 1.0, 0.0, function(v) ARules.A = v end)
     parameter.number("AB", -1.0, 1.0, 0.0, function(v) ARules.B = v end)
     parameter.number("AC", -1.0, 1.0, 0.0, function(v) ARules.C = v end)
@@ -128,9 +130,6 @@ function setupRules()
     parameter.number("GE", -1.0, 1.0, 0.0, function(v) GRules.E = v end)
     parameter.number("GF", -1.0, 1.0, 0.0, function(v) GRules.F = v end)
     parameter.number("GG", -1.0, 1.0, 0.0, function(v) GRules.G = v end)
-    
-    parameter.action("Reset Rules", resetRules)
-    parameter.action("Randomize Rules", randomRules)
 end
 
 -- Reset all interaction rules to 0.0

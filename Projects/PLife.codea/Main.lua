@@ -1,23 +1,18 @@
 -- quadtree for performance scaling
 -- chris geese @ 2026
 
-lastQuery = {}
-touchX = nil
-touchY = nil
-
 function setup()
     te = ThemeEngine()
     qt = Quadtree(0, 0, WIDTH, HEIGHT, 10, 0, 4)
     setupRules()
-    
+
     -- test with 250 particles
     for i = 1, 250 do
         local particle = Particle()
         particle.x = rX()
         particle.y = rY()
         qt:insert(particle)
-    end
-    
+    end 
 end
 
 function update(dt)
@@ -26,10 +21,24 @@ end
 
 function draw()
     -- Draw all particles
-    qt:forEach(function(particle)
-        particle:drawHeading()
-    end)
-    
+    if drawMode == 1 then
+        qt:forEach(function(particle)
+            particle:drawEllipse()
+        end)
+    elseif drawMode == 2 then
+        qt:forEach(function(particle)
+            particle:drawHeading()
+        end)
+    elseif drawMode == 3 then
+        qt:forEach(function(particle)
+            particle:drawNoFill()
+        end)
+    elseif drawMode == 4 then
+        qt:forEach(function(particle)
+            particle:drawAllSolid()
+        end)
+    end
+        
     -- Draw quadtree boundaries for debugging
     qt:draw()
     

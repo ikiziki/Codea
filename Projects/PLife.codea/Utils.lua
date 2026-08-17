@@ -1,6 +1,12 @@
 -- helper functions
 -- chris geese @ 2026
 
+--global variables
+lastQuery = {}
+touchX = nil
+touchY = nil
+drawMode = 1
+
 -- close debug window by default
 viewer.mode = FULLSCREEN
 
@@ -16,6 +22,17 @@ function updateTheme()
     end
     background(bg)
 end
+
+-- set up drawmode cycler
+print("draw Mode =", drawMode)
+function cycleDrawMode()
+    drawMode = drawMode + 1
+    if drawMode > 4 then
+        drawMode = 1
+    end
+    print("draw Mode =", drawMode)
+end
+parameter.action("cycleMode", cycleDrawMode)
 
 -- returns a random whole number between min/max
 function rInt(min, max)
@@ -41,11 +58,12 @@ end
 function flipSign(n)
     return -n
 end
-
+ -- returns a random int between 0 and the screen width
 function rX()
     return math.random(0, WIDTH)
 end
 
+-- returns a random int between 0 and the screen height
 function rY()
     return math.random(0,HEIGHT)
 end
