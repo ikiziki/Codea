@@ -26,3 +26,12 @@ function flipSign(n)
     return -n
 end
 
+-- returns a random integer between 0 and width
+function rX()
+    math.random(0, WIDTH)
+end
+
+-- rwturns a random integer between 0 and height
+function rY()
+    return math.random(0, HEIGHT)
+end
