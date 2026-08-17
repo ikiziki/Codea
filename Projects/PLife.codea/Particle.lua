@@ -41,6 +41,7 @@ function Particle:init(x, y, type)
     self.radius = 5     -- particle size
     self.type = type or setType()      -- particle type
     self.color = getTypeColor(self.type) -- particle color
+    self.selected = false
 end
 
 -- updates the particle
@@ -51,8 +52,15 @@ end
 function Particle:drawEllipse()
     pushStyle()
     noStroke()
+    
+    if self.selected then
+        fill(255, 255, 255)
+        ellipse(self.x, self.y, self.radius * 4)
+    end
+    
     fill(self.color[1], self.color[2], self.color[3])
     ellipse(self.x, self.y, self.radius * 2)
+    
     popStyle()
 end
 
@@ -60,12 +68,29 @@ end
 function Particle:drawHeading()
     pushStyle()
     noStroke()
-    fill(self.color[1], self.color[2], self.color[3])
+    
     local angle = math.atan(self.vY, self.vX)
+    
     pushMatrix()
     translate(self.x, self.y)
     rotate(math.deg(angle))
-    triangle(self.radius, 0, -self.radius, -self.radius * 0.6, -self.radius, self.radius * 0.6)
+    
+    if self.selected then
+        fill(255, 255, 255)
+        triangle(
+        self.radius * 2, 0,
+        -self.radius * 2, -self.radius * 1.2,
+        -self.radius * 2, self.radius * 1.2
+        )
+    end
+    
+    fill(self.color[1], self.color[2], self.color[3])
+    triangle(
+    self.radius, 0,
+    -self.radius, -self.radius * 0.6,
+    -self.radius, self.radius * 0.6
+    )
+    
     popMatrix()
     popStyle()
 end

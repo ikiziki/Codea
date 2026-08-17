@@ -42,3 +42,10 @@ function flipSign(n)
     return -n
 end
 
+function rX()
+    return math.random(0, WIDTH)
+end
+
+function rY()
+    return math.random(0,HEIGHT)
+end

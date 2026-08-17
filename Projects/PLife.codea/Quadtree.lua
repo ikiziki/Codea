@@ -2,8 +2,10 @@
 -- chris geese @ 2026
 
 -- Circular search range
+-- Circular search range
 circFinder = class("circFinder")
 function circFinder:init(x, y, radius)
+    self.type = "circle"
     self.x = x or 0
     self.y = y or 0
     self.radius = radius or 0
@@ -12,6 +14,7 @@ end
 -- Rectangular search range
 rectFinder = class("rectFinder")
 function rectFinder:init(x, y, width, height)
+    self.type = "rectangle"
     self.x = x or 0
     self.y = y or 0
     self.width = width or 0
@@ -66,7 +69,7 @@ end
 
 -- Checks whether this node intersects a search range
 function Quadtree:intersects(range)
-    if range:is_a(rectFinder) then
+    if range.type == "rectangle" then
         return not (
         range.x > self.x + self.width or
         range.x + range.width < self.x or
@@ -74,24 +77,31 @@ function Quadtree:intersects(range)
         range.y + range.height < self.y
         )
     end
-    if range:is_a(circFinder) then
-        local closestX = math.max(self.x, math.min(range.x, self.x + self.width))
-        local closestY = math.max(self.y, math.min(range.y, self.y + self.height))
+    
+    if range.type == "circle" then
+        local closestX = math.max(
+        self.x,
+        math.min(range.x, self.x + self.width)
+        )
+        local closestY = math.max(
+        self.y,
+        math.min(range.y, self.y + self.height)
+        )
         local dx = range.x - closestX
         local dy = range.y - closestY
-        return (dx * dx + dy * dy) <= range.radius * range.radius
+        return dx * dx + dy * dy <= range.radius * range.radius
     end
     return false
 end
 
 -- Finds objects within a search range
 function Quadtree:query(range, found)
-    found = found or {}
+    found = found or {} 
     if not self:intersects(range) then
         return found
-    end
-    for _, object in ipairs(self.objects) do
-        if range:is_a(rectFinder) then
+    end 
+    if range.type == "rectangle" then
+        for _, object in ipairs(self.objects) do
             if object.x >= range.x
             and object.x < range.x + range.width
             and object.y >= range.y
@@ -99,9 +109,10 @@ function Quadtree:query(range, found)
                 table.insert(found, object)
             end
         end
-        if range:is_a(circFinder) then
+    elseif range.type == "circle" then
+        for _, object in ipairs(self.objects) do
             local dx = object.x - range.x
-            local dy = object.y - range.y
+            local dy = object.y - range.y     
             if dx * dx + dy * dy <= range.radius * range.radius then
                 table.insert(found, object)
             end
@@ -113,7 +124,7 @@ function Quadtree:query(range, found)
                 child:query(range, found)
             end
         end
-    end
+    end 
     return found
 end
 
@@ -215,15 +226,28 @@ function Quadtree:subdivide()
     self.objects = remaining
 end
 
+-- acces the quadtree contents
+function Quadtree:forEach(callback)
+    for _, object in ipairs(self.objects) do
+        callback(object)
+    end
+    
+    if self.subdivided then
+        for _, child in pairs(self.children) do
+            if child then
+                child:forEach(callback)
+            end
+        end
+    end
+end
+
 -- Removes all objects and child nodes from this node
 function Quadtree:clear()
     self.objects = {}
-    self.children = {
-        NE = nil,
-        NW = nil,
-        SE = nil,
-        SW = nil
-    }
+    self.children.NE = nil
+    self.children.NW = nil
+    self.children.SE = nil
+    self.children.SW = nil
     self.subdivided = false
 end
 
