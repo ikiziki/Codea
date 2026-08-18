@@ -13,12 +13,6 @@ function HomeState:draw()
     sf:draw()
 end
 
-function HomeState:pause()
-end
-
-function HomeState:resume()
-end
-
 function HomeState:touched(touch)
 end
 

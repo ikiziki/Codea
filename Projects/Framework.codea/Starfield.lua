@@ -20,17 +20,17 @@ function Star:update(dt)
 end
 
 function Star:draw()
-    local fg
-    if te.style == 1.0 then
-        fg = color(35)
-    elseif te.style == 2.0 then
-        fg = color(235)
-    end
     style.push()
-    fill(fg)
+    if te.style == 1.0 then
+        fill(color(35))
+    elseif te.style == 2.0 then
+        fill(color(235))
+    end
     ellipse(self.x, self.y, self.size, self.size)
     style.pop()
 end
+
+
 
 
 Starfield = class("Starfield")
