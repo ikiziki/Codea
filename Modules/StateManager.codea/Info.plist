@@ -5,11 +5,9 @@
 	<key>Buffer Order</key>
 	<array>
 		<string>Main.lua</string>
-		<string>StateManager.lua</string>
-		<string>BaseState.lua</string>
 	</array>
 	<key>ProjectID</key>
-	<string>396006F2-4582-4922-AE32-3A7518248868</string>
+	<string>6357706E-674E-41FC-B3E7-B3A96D7FCDF9</string>
 	<key>Runtime Type</key>
 	<string>modern</string>
 </dict>
