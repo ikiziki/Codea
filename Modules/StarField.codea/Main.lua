@@ -1,3 +1,6 @@
+-- simple starfield animation 
+-- cheis geese @ 2026
+
 Star = class("Star")
 function Star:init(maxSpeed, maxSize)
     self.x = rX()
@@ -21,11 +24,7 @@ end
 
 function Star:draw()
     style.push()
-    if te.style == 1.0 then
-        fill(color(35))
-    elseif te.style == 2.0 then
-        fill(color(235))
-    end
+    fill(255)
     ellipse(self.x, self.y, self.size, self.size)
     style.pop()
 end
