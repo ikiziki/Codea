@@ -9,7 +9,7 @@ function StateManager:init()
     self.stateStack = {}
 end
 
-function StateManager:load(state)
+function StateManager:enter(state)
     if self.currentState then
         self.currentState:exit()
     end
