@@ -6,9 +6,10 @@
 	<array>
 		<string>Main.lua</string>
 		<string>StateManager.lua</string>
+		<string>BaseState.lua</string>
 		<string>ThemeEngine.lua</string>
 		<string>Utils.lua</string>
-		<string>BaseState.lua</string>
+		<string>Landing.lua</string>
 	</array>
 	<key>ProjectID</key>
 	<string>23F5C24C-EF48-4246-BFED-56ED05895C3B</string>

@@ -54,6 +54,12 @@ function StateManager:draw()
     end
 end
 
+function StateManager:exit()
+    if self.currentState then
+        self.currentState:exit()
+    end
+end
+
 function StateManager:touched(touch)
     if self.currentState then
         self.currentState:touched(touch)

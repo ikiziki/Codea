@@ -13,3 +13,9 @@ end
 
 function BaseState:draw()
 end
+
+function BaseState:exit()
+end
+
+function BaseState:touched(touch)
+end
