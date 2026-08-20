@@ -4,6 +4,7 @@
 Landing = class("Landing", BaseState)
 function Landing:init()
     mscmgr:play(audioAssets.fell, true)
+    sf = Starfield()
 end
 
 function Landing:enter()
@@ -11,6 +12,7 @@ function Landing:enter()
 end
 
 function Landing:update(dt)
+    sf:update(dt)
 end
 
 function Landing:draw()
@@ -19,6 +21,7 @@ function Landing:draw()
     elseif te.style == 2.0 then
         background(35)
     end
+    sf:draw()
 end
 
 function Landing:exit()
