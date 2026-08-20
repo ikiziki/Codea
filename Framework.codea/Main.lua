@@ -2,26 +2,35 @@
 -- chris geese @ 2026
 
 function setup()
+    -- theme system
     te = ThemeEngine()
+    -- game state manager
     gsm = StateManager()
+    -- assets
     img = loadImageAssets()
     msc = loadAudioAssets()
     snd = loadSoundAssets()
+    -- music manager
     mscmgr = MusicManager()
+    -- load the landing state
     gsm:enter(Landing())
 
 end
 
 function update(dt)
+    -- update the theme
     te:update()
+    -- update current state
     gsm:update(dt)
 end
 
 function draw()
+    -- draw currwnt state
     gsm:draw()
 end
 
 function touched(touch)
+    -- resirect touch to current atate
     gsm:touched(touch)
 end
 
