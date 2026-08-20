@@ -3,7 +3,7 @@
 
 Landing = class("Landing", BaseState)
 function Landing:init()
-    mscmgr:play(audioAssets.fell)
+    mscmgr:play(audioAssets.fell, true)
 end
 
 function Landing:enter()

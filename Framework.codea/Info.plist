@@ -10,6 +10,7 @@
 		<string>BaseState.lua</string>
 		<string>Landing.lua</string>
 		<string>ThemeEngine.lua</string>
+		<string>Starfield.lua</string>
 		<string>Utils.lua</string>
 		<string>shaders/</string>
 		<string>shaders/Swirl.shader/</string>
