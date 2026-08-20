@@ -15,10 +15,8 @@ function StateManager:enter(state)
             self.currentState:exit()
         end
     end
-    
     self.previousState = self.currentState
     self.currentState = state
-    
     if self.currentState.enter then
         self.currentState:enter()
     end
@@ -29,12 +27,9 @@ function StateManager:push(state)
         if self.currentState.pause then
             self.currentState:pause()
         end
-        
         table.insert(self.stateStack, self.currentState)
     end
-    
     self.currentState = state
-    
     if self.currentState.enter then
         self.currentState:enter()
     end
@@ -44,13 +39,10 @@ function StateManager:pop()
     if not self.currentState then
         return
     end
-    
     if self.currentState.exit then
         self.currentState:exit()
     end
-    
     self.currentState = table.remove(self.stateStack)
-    
     if self.currentState and self.currentState.resume then
         self.currentState:resume()
     end
