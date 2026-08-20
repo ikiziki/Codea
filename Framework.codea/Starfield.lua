@@ -1,3 +1,6 @@
+-- simple starfield animation
+-- chris geese @ 2026
+
 Star = class("Star")
 function Star:init()
 end
@@ -7,6 +10,7 @@ end
 
 function Star:draw()
 end
+
 
 
 Starfield = class("Starfield")
