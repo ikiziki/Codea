@@ -23,6 +23,6 @@ end
 function Landing:exit()
 end
 
-function touched(touch)
+function Landing:touched(touch)
 end
 

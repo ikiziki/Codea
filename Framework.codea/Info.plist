@@ -10,6 +10,11 @@
 		<string>Landing.lua</string>
 		<string>ThemeEngine.lua</string>
 		<string>Utils.lua</string>
+		<string>shaders/</string>
+		<string>shaders/Swirl.shader/</string>
+		<string>shaders/Ripple.shader/</string>
+		<string>images/</string>
+		<string>audio/</string>
 	</array>
 	<key>ProjectID</key>
 	<string>23F5C24C-EF48-4246-BFED-56ED05895C3B</string>
