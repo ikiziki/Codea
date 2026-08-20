@@ -5,8 +5,9 @@ function setup()
     te = ThemeEngine()
     gsm = StateManager()
     img = loadImageAssets()
-    musoc = loadAudioAssets()
-    sounds = loadSoundAssets()
+    msc = loadAudioAssets()
+    snd = loadSoundAssets()
+    mscmgr = MusicManager()
     gsm:enter(Landing())
 
 end
@@ -91,6 +92,6 @@ function loadSoundAssets()
         sink = asset.audio.sink,
         start = asset.audio.start
     }
-    print("Sounds Loades")
+    print("Sounds Loaded")
     return soundAssets
 end
