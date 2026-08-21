@@ -61,7 +61,6 @@ function loadImageAssets()
         uranus = asset.images.uranus,
         venus = asset.images.venus
         }
-    print("Sprites loaded")
     return assets
 end
 
@@ -81,7 +80,6 @@ function loadAudioAssets()
         way = asset.audio.way,
         which = asset.audio.which
         }
-    print("Music Loaded")
     return audioAssets
 end
 
@@ -101,6 +99,5 @@ function loadSoundAssets()
         sink = asset.audio.sink,
         start = asset.audio.start
     }
-    print("Sounds Loaded")
     return soundAssets
 end

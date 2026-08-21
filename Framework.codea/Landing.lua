@@ -8,7 +8,6 @@ function Landing:init()
 end
 
 function Landing:enter()
-    print("Landing Loaded")
 end
 
 function Landing:update(dt)
