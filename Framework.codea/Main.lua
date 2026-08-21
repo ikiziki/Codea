@@ -7,10 +7,10 @@ function setup()
     img = loadImageAssets()
     msc = loadAudioAssets()
     snd = loadSoundAssets()
+    shd = loadShaderAssets()
     mscmgr = MusicManager()
 
     gsm:enter(Landing())
-
 end
 
 function update(dt)
@@ -88,4 +88,12 @@ function loadSoundAssets()
         start = asset.audio.start
     }
     return soundAssets
+end
+
+function loadShaderAssets()
+    shaderAssets = {
+        ripple = asset.shaders.Ripple,
+        swirl = asset.shaders.Swirl
+    }
+    return shaderAssets
 end

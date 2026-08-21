@@ -24,6 +24,7 @@ function Landing:exit()
 end
 
 function Landing:touched(touch)
+    -- detect if within button bounds 
 end
 
 function Landing:drawButtons()
@@ -31,8 +32,13 @@ function Landing:drawButtons()
     noStroke()
     fill(te.BTN)
     rectMode(CENTER)
+    -- new game
     rect(WIDTH/2,(HEIGHT/2+175), 250, 75, 20)
+    -- continue game
     rect(WIDTH/2, (HEIGHT/2), 250, 75, 20)
+    -- settings
     rect(WIDTH/2, (HEIGHT/2-175), 250, 75, 20)
+    -- credits
+    rect(WIDTH/2, (HEIGHT/2-350), 125, 50, 20)
     popStyle()
 end

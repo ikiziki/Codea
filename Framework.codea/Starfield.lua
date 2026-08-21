@@ -12,8 +12,8 @@ end
 
 function Star:update(dt)
     self.x = self.x + self.speed * dt * 30
-    if self.x > WIDTH then
-        self.x = 0
+    if self.x > WIDTH+5 then
+        self.x = -5
         self.y = rY()
         self.speed = rFlt(1, self.maxSpeed)
         self.radius = rInt(1, 4)
@@ -23,6 +23,7 @@ end
 function Star:draw()
     fill(te.FG)
     noStroke()
+    --sprite(img.asteroid, self.x, self.y, self.radius)
     ellipse(self.x, self.y, self.radius)
 end
 
