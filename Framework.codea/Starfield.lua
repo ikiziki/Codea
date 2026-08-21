@@ -11,7 +11,7 @@ function Star:init()
 end
 
 function Star:update(dt)
-    self.x = self.x + self.speed * dt * 60
+    self.x = self.x + self.speed * dt * 30
     if self.x > WIDTH then
         self.x = 0
         self.y = rY()
