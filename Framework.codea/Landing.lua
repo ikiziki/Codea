@@ -15,12 +15,9 @@ function Landing:update(dt)
 end
 
 function Landing:draw()
-    if te.style == 1.0 then
-        background(235)
-    elseif te.style == 2.0 then
-        background(35)
-    end
+    background(te.BG)
     sf:draw()
+    self:drawButtons()
 end
 
 function Landing:exit()
@@ -29,3 +26,13 @@ end
 function Landing:touched(touch)
 end
 
+function Landing:drawButtons()
+    pushStyle()
+    noStroke()
+    fill(te.BTN)
+    rectMode(CENTER)
+    rect(WIDTH/2,(HEIGHT/2+175), 250, 75, 20)
+    rect(WIDTH/2, (HEIGHT/2), 250, 75, 20)
+    rect(WIDTH/2, (HEIGHT/2-175), 250, 75, 20)
+    popStyle()
+end

@@ -21,17 +21,10 @@ function Star:update(dt)
 end
 
 function Star:draw()
-    if te.style == 1.0 then
-        fill(35)
-    elseif te.style == 2.0 then
-        fill(235)
-    end
+    fill(te.FG)
     noStroke()
     ellipse(self.x, self.y, self.radius)
 end
-
-
-
 
 Starfield = class("Starfield")
 function Starfield:init()
