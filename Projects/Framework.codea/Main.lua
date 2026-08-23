@@ -1,7 +1,6 @@
 -- Framework for NEiL
 -- chris geese @ 2026
 
-
 function setup()
 end
 
@@ -11,5 +10,5 @@ end
 function draw()
 end
 
-function touches(touch)
+function touched(touch)
 end
