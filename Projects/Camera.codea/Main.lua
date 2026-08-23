@@ -31,6 +31,8 @@ function draw()
     -- Move the world opposite to the camera
     translate(-cameraX, -cameraY)
     -- Bottom-left
+    strokeWidth(10)
+    stroke(0)
     fill(255, 0, 0)
     rect(0, 0, WIDTH, HEIGHT)
     -- Bottom-right

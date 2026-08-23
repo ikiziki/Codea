@@ -5,21 +5,9 @@
 	<key>Buffer Order</key>
 	<array>
 		<string>Main.lua</string>
-		<string>StateManager.lua</string>
-		<string>MusicManager.lua</string>
-		<string>BaseState.lua</string>
-		<string>Landing.lua</string>
-		<string>Starfield.lua</string>
-		<string>ThemeEngine.lua</string>
-		<string>Utils.lua</string>
-		<string>shaders/</string>
-		<string>shaders/Swirl.shader/</string>
-		<string>shaders/Ripple.shader/</string>
-		<string>images/</string>
-		<string>audio/</string>
 	</array>
 	<key>ProjectID</key>
-	<string>23F5C24C-EF48-4246-BFED-56ED05895C3B</string>
+	<string>75245831-F611-419C-858B-D413835D6835</string>
 	<key>Runtime Type</key>
 	<string>modern</string>
 	<key>Tint Color</key>
