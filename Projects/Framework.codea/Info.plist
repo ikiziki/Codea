@@ -5,6 +5,11 @@
 	<key>Buffer Order</key>
 	<array>
 		<string>Main.lua</string>
+		<string>StateManager.lua</string>
+		<string>MusicManager.lua</string>
+		<string>ThemeManager.lua</string>
+		<string>Starfield.lua</string>
+		<string>Utilities.lua</string>
 	</array>
 	<key>ProjectID</key>
 	<string>75245831-F611-419C-858B-D413835D6835</string>
