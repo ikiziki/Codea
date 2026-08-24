@@ -4,7 +4,7 @@
 <dict>
 	<key>Buffer Order</key>
 	<array>
-		<string>Theme.lua</string>
+		<string>ThemeEngine.lua</string>
 	</array>
 	<key>ProjectID</key>
 	<string>E37DEF79-17D5-4767-BE85-3D95EEE3C0B3</string>

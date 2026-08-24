@@ -4,7 +4,6 @@
 <dict>
 	<key>Buffer Order</key>
 	<array>
-		<string>Main.lua</string>
 		<string>Launcher.lua</string>
 	</array>
 	<key>ProjectID</key>
