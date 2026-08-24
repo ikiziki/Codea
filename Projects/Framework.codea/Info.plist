@@ -5,11 +5,22 @@
 	<key>Buffer Order</key>
 	<array>
 		<string>Main.lua</string>
-		<string>StateManager.lua</string>
-		<string>MusicManager.lua</string>
+		<string>LoadAssets.lua</string>
 		<string>ThemeManager.lua</string>
+		<string>MusicManager.lua</string>
+		<string>StateManager.lua</string>
+		<string>BaseState.lua</string>
+		<string>MenuState.lua</string>
 		<string>Starfield.lua</string>
 		<string>Utilities.lua</string>
+		<string>assets/</string>
+		<string>assets/mus/</string>
+		<string>assets/shd/</string>
+		<string>assets/shd/Ripple.shader/</string>
+		<string>assets/shd/Swirl.shader/</string>
+		<string>assets/snd/</string>
+		<string>assets/plr/</string>
+		<string>assets/obj/</string>
 	</array>
 	<key>ProjectID</key>
 	<string>75245831-F611-419C-858B-D413835D6835</string>

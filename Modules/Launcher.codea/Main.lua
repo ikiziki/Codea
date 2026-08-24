@@ -1,5 +1,5 @@
--- NEiL Launcher
--- cheis geese @ 2026
+-- 
+-- chris geese @ 2026
 
 function setup()
 end
@@ -7,7 +7,7 @@ end
 function update(dt)
 end
 
-function draw()   
+function draw()
 end
 
 function touched(touch)

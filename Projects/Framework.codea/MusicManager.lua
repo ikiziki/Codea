@@ -1,18 +1,16 @@
 -- used to hanldle music playback
--- cheis geese @ 2026
+-- chris geese @ 2026
 
 MusicManager = class("MusicManager")
 
 function MusicManager:init()
     self.current = nil
-    print("Music Manager Loaded")
 end
 
 function MusicManager:play(track, loop)
     if self.current == track then
         return
     end
-    
     music(track, loop or true)
     self.current = track
 end

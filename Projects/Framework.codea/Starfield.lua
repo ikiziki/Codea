@@ -1,4 +1,4 @@
--- simple starfield animation L => R
+-- simple starfield animation BL => TR
 -- chris geese @ 2026
 
 Star = class("Star")
@@ -14,17 +14,17 @@ function Star:update(dt)
     local movement = self.v * dt * self.scalar  
     self.x = self.x + movement
     self.y = self.y + movement  
-    if self.x > WIDTH then
+    if self.x > WIDTH+5 then
         self.x = 0
     end
-    if self.y > HEIGHT then
+    if self.y > HEIGHT+5 then
         self.y = 0
     end
 end
 
 function Star:draw()
     style.push()
-    fill(255)
+    fill(theme.fg)
     ellipse(self.x, self.y, self.size, self.size)
     style.pop()
 end

@@ -1,5 +1,5 @@
 -- used to hanldle music playback
--- cheis geese @ 2026
+-- chris geese @ 2026
 
 MusicManager = class("MusicManager")
 

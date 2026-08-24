@@ -35,3 +35,8 @@ end
 function rY()
     return math.random(0, HEIGHT)
 end
+
+-- rerurns a floored vec2
+function floorVec2(v)
+    return vec2(math.floor(v.x), math.floor(v.y))
+end

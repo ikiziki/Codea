@@ -1,6 +1,9 @@
 -- useful utilities to streamline projects
 -- chris geese @ 2026
 
+-- set viewer to fullscreen
+viewer.mode = FULLSCREEN
+
 -- returns a random whole number between min/max
 function rInt(min, max)
     return math.random(min, max)
