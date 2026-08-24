@@ -8,13 +8,14 @@ function Launcher:init()
     self.launched = false
     self.start = vec2(0, 0)
     self.current = vec2(0, 0)
-    self.maxDistance = 200
+    self.maxDistance = 150
     self.maxSpeed = 100
     self.circleRadius = 20
     self.velocity = vec2(0, 0)
 end
 
 function Launcher:touchBegan(touch)
+    if touch.pos.y > HEIGHT / 3 then return end
     self.start = touch.pos
     self.current = touch.pos
     self.active = true
@@ -28,7 +29,6 @@ end
 
 function Launcher:touchEnded(touch)
     if not self.active then return end
-    
     self.current = touch.pos
     self:launch()
 end
@@ -42,33 +42,28 @@ end
 function Launcher:getVelocity()
     local vector = self.start - self.current
     local lengthSqr = vector.lengthSqr
-    
     if lengthSqr == 0 then return vec2(0, 0) end
-    
     local length = math.sqrt(lengthSqr)
     local distance = math.min(length, self.maxDistance)
     local direction = vector / length
     local power = distance / self.maxDistance
-    
     return direction * (power * self.maxSpeed)
 end
 
 function Launcher:getPower()
     local vector = self.start - self.current
     local distance = math.sqrt(vector.lengthSqr)
-    
     return math.min(distance / self.maxDistance, 1)
 end
 
 function Launcher:getPowerColor()
     local power = self:getPower()
-    
     if power < 0.333 then
         local t = power / 0.333
         return color(theme.fg.r * (1 - t), theme.fg.g * (1 - t) + 255 * t, theme.fg.b * (1 - t))
     elseif power < 0.666 then
         local t = (power - 0.333) / 0.333
-        return color(0 + 255 * t, 255 - 100 * t, 0)
+        return color(255 * t, 255 - 100 * t, 0)
     else
         local t = (power - 0.666) / 0.334
         return color(255, 155 * (1 - t), 0)
@@ -76,28 +71,36 @@ function Launcher:getPowerColor()
 end
 
 function Launcher:draw()
-    if not self.active then return end
-    
-    local powerColor = self:getPowerColor()
-    local radius = self.circleRadius * 4 * self:getPower()
-    
-    style.push()
-    
-    -- Drag line
-    stroke(powerColor.r, powerColor.g, powerColor.b, 128)
+    stroke(theme.fg.r, theme.fg.g, theme.fg.b, 40)
     strokeWidth(2)
-    line(self.start.x, self.start.y, self.current.x, self.current.y)
-    
-    -- Power circle
+    local dashLength = 12
+    local gapLength = 10
+    local x = 0
+    while x < WIDTH do
+        line(x, HEIGHT / 3, math.min(x + dashLength, WIDTH), HEIGHT / 3)
+        x = x + dashLength + gapLength
+    end
+    if not self.active then return end
+    local powerColor = self:getPowerColor()
+    local radius = self.circleRadius * 3 * self:getPower()
+    style.push()
+    local direction = self.start - self.current
+    local lengthSqr = direction.lengthSqr
+    if lengthSqr > 0 then
+        local length = math.sqrt(lengthSqr)
+        direction = direction / length
+        local projectionStart = radius
+        local projectionEnd = radius + 50
+        stroke(powerColor.r, powerColor.g, powerColor.b, 128)
+        strokeWidth(2)
+        line(self.start.x + direction.x * projectionStart, self.start.y + direction.y * projectionStart, self.start.x + direction.x * projectionEnd, self.start.y + direction.y * projectionEnd)
+    end
     noFill()
     stroke(powerColor.r, powerColor.g, powerColor.b, 128)
     strokeWidth(4)
     ellipse(self.start.x, self.start.y, radius * 2, radius * 2)
-    
-    -- Launch point
     fill(theme.fg)
     noStroke()
     ellipse(self.start.x, self.start.y, 12, 12)
-    
     style.pop()
 end
