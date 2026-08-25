@@ -2,7 +2,6 @@
 -- chris geese @ 2026
 
 function setup()
-    viewer.mode = FULLSCREEN
     theme = ThemeEngine()
     worldWidth = WIDTH * 3
     worldHeight = HEIGHT * 4
@@ -13,7 +12,7 @@ function setup()
     stateManager = StateManager()
     launchState = LaunchState()
     flightState = FlightState()
-    stateManager:load(launchState)
+    stateManager:load(MenuState())
 end
 
 function update(dt)

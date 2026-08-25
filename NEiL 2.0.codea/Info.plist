@@ -5,14 +5,16 @@
 	<key>Buffer Order</key>
 	<array>
 		<string>Main.lua</string>
+		<string>Theme.lua</string>
 		<string>StateManager.lua</string>
+		<string>BaseState.lua</string>
+		<string>MenuState.lua</string>
+		<string>LaunchState.lua</string>
+		<string>FlightState.lua</string>
 		<string>Camera.lua</string>
 		<string>Launcher.lua</string>
 		<string>NEiL.lua</string>
 		<string>Starfield.lua</string>
-		<string>LaunchState.lua</string>
-		<string>FlightState.lua</string>
-		<string>Theme.lua</string>
 		<string>Utilities.lua</string>
 	</array>
 	<key>ProjectID</key>
