@@ -2,24 +2,25 @@
 -- chris geese @ 2026
 
 Launcher = class("Launcher")
-
 function Launcher:init()
     self.active = false
     self.launched = false
     self.start = vec2(0, 0)
     self.current = vec2(0, 0)
     self.maxDistance = 150
-    self.maxSpeed = 100
+    self.maxSpeed = 300
     self.circleRadius = 20
     self.velocity = vec2(0, 0)
 end
 
-function Launcher:touchBegan(touch)
-    if touch.pos.y > HEIGHT / 3 then return end
+function Launcher:touchBegan(touch, neilActive)
+    if neilActive then return false end
+    if touch.y > HEIGHT / 4 then return false end
     self.start = touch.pos
     self.current = touch.pos
     self.active = true
     self.launched = false
+    return true
 end
 
 function Launcher:touchMoved(touch)
@@ -30,13 +31,18 @@ end
 function Launcher:touchEnded(touch)
     if not self.active then return end
     self.current = touch.pos
-    self:launch()
+end
+
+function Launcher:cancel()
+    self.active = false
+    self.launched = false
 end
 
 function Launcher:launch()
     self.velocity = self:getVelocity()
     self.launched = true
     self.active = false
+    return self.velocity
 end
 
 function Launcher:getVelocity()
@@ -70,14 +76,16 @@ function Launcher:getPowerColor()
     end
 end
 
-function Launcher:draw()
+function Launcher:draw(neilActive)
+    resetMatrix()
+    if neilActive then return end
     stroke(theme.fg.r, theme.fg.g, theme.fg.b, 40)
     strokeWidth(2)
     local dashLength = 12
     local gapLength = 10
     local x = 0
     while x < WIDTH do
-        line(x, HEIGHT / 3, math.min(x + dashLength, WIDTH), HEIGHT / 3)
+        line(x, HEIGHT / 4, math.min(x + dashLength, WIDTH), HEIGHT / 4)
         x = x + dashLength + gapLength
     end
     if not self.active then return end

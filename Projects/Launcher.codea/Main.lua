@@ -7,12 +7,18 @@ function setup()
 end
 
 function update(dt)
-    theme:update()
+    theme:update(dt)
+    if launcher.neil then
+        launcher.neil:update(dt)
+    end
 end
 
 function draw()
     background(theme.bg)
     launcher:draw()
+    if launcher.neil then
+        launcher.neil:draw()
+    end
 end
 
 function touched(touch)

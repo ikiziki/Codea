@@ -1,4 +1,4 @@
--- simple starfield animation BL => TR
+-- Starfield for NEiL
 -- chris geese @ 2026
 
 Star = class("Star")
@@ -6,14 +6,14 @@ function Star:init(maxSpeed, maxSize)
     self.x = rX()
     self.y = rY()
     self.v = rInt(1, maxSpeed)
-    self.size = rInt(1, maxSize)  
-    self.scalar = 10
+    self.size = rInt(1, maxSize)
+    self.scalar = 0
 end
 
 function Star:update(dt)
-    local movement = self.v * dt * self.scalar  
+    local movement = self.v * dt * self.scalar
     self.x = self.x + movement
-    self.y = self.y + movement  
+    self.y = self.y + movement
     if self.x > WIDTH then
         self.x = 0
     end
@@ -24,20 +24,17 @@ end
 
 function Star:draw()
     style.push()
-    fill(255)
+    fill(theme.fg)
     ellipse(self.x, self.y, self.size, self.size)
     style.pop()
 end
-
-
-
 
 Starfield = class("Starfield")
 function Starfield:init()
     self.count = 250
     self.maxSpeed = 5
     self.maxSize = 3
-    self.stars = {}  
+    self.stars = {}
     for i = 1, self.count do
         table.insert(self.stars, Star(self.maxSpeed, self.maxSize))
     end
