@@ -68,7 +68,7 @@ function Launcher:getPowerColor()
     end
 end
 
-function Launcher:draw(neilActive)
+function Launcher:draw(neilActive, previousFlightTime)
     if neilActive then return end
     
     stroke(theme.fg.r, theme.fg.g, theme.fg.b, 40)
@@ -94,6 +94,11 @@ function Launcher:draw(neilActive)
     fontSize(16)
     textAlign(CENTER)
     text("LAUNCH ZONE", WIDTH / 2, HEIGHT / 4)
+    
+    if previousFlightTime and previousFlightTime > 0 then
+        fontSize(14)
+        text(string.format("PREVIOUS FLIGHT  %.2f", previousFlightTime), WIDTH / 2, HEIGHT / 4 - 22)
+    end
     
     if not self.active then return end
     

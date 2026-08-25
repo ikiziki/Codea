@@ -12,7 +12,7 @@ function setup()
     stateManager = StateManager()
     launchState = LaunchState()
     flightState = FlightState()
-    stateManager:load(MenuState())
+    stateManager:load(LaunchState())
 end
 
 function update(dt)

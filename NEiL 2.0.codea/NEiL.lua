@@ -9,6 +9,7 @@ function NEiL:init(pos)
     self.radius = 6
     self.size = 24
     self.active = false
+    self.previousFlightTime = 0
 end
 
 function NEiL:update(dt)

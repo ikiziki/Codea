@@ -10,9 +10,10 @@ function Camera:init()
     self.y = HEIGHT * 0.5
     self.zoom = 1
     self.zoomSpeed = 0.002
-    self.minZoom = 0.25
-    self.maxZoom = 2
-    self.cameraMargin = 0.1
+    self.minZoom = 0.35
+    self.maxZoom = 2.0
+    self.cameraMarginX = WIDTH * 0.05
+    self.cameraMarginY = HEIGHT * 0.05
     self.lastTouchX = 0
     self.lastTouchY = 0
     self.lastPinchDistance = nil
@@ -22,17 +23,11 @@ function Camera:init()
 end
 
 function Camera:screenToWorld(pos)
-    return vec2(
-    self.x + (pos.x - WIDTH / 2) / self.zoom,
-    self.y + (pos.y - HEIGHT / 2) / self.zoom
-    )
+    return vec2(self.x + (pos.x - WIDTH / 2) / self.zoom,self.y + (pos.y - HEIGHT / 2) / self.zoom)
 end
 
 function Camera:worldToScreen(pos)
-    return vec2(
-    WIDTH / 2 + (pos.x - self.x) * self.zoom,
-    HEIGHT / 2 + (pos.y - self.y) * self.zoom
-    )
+    return vec2(WIDTH / 2 + (pos.x - self.x) * self.zoom,HEIGHT / 2 + (pos.y - self.y) * self.zoom)
 end
 
 function Camera:beginPan(touch)
@@ -61,7 +56,7 @@ function Camera:updatePinch(distance)
     end
     local change = distance - self.lastPinchDistance
     self.zoom = self.zoom + change * self.zoomSpeed
-    self.zoom = math.max(self.minZoom, math.min(self.zoom, self.maxZoom))
+    self.zoom = math.max(self.minZoom,math.min(self.zoom,self.maxZoom))
     self.lastPinchDistance = distance
     self:clamp()
 end
@@ -83,36 +78,36 @@ end
 function Camera:clamp()
     local halfWidth = WIDTH / (2 * self.zoom)
     local halfHeight = HEIGHT / (2 * self.zoom)
-    local marginX = WIDTH * self.cameraMargin / self.zoom
-    local marginY = HEIGHT * self.cameraMargin / self.zoom
-    self.x = math.max(
-    halfWidth - marginX,
-    math.min(self.x, self.worldWidth - halfWidth + marginX)
-    )
-    self.y = math.max(
-    halfHeight - marginY,
-    math.min(self.y, self.worldHeight - halfHeight + marginY)
-    )
+    local margin = 0.05
+    local marginWidth = WIDTH * margin / self.zoom
+    local marginHeight = HEIGHT * margin / self.zoom
+    local minX = halfWidth - marginWidth
+    local maxX = self.worldWidth - halfWidth + marginWidth
+    local minY = halfHeight - marginHeight
+    local maxY = self.worldHeight - halfHeight + marginHeight
+    if minX > maxX then
+        self.x = self.worldWidth / 2
+    else
+        self.x = math.max(minX,math.min(self.x,maxX))
+    end
+    if minY > maxY then
+        self.y = self.worldHeight / 2
+    else
+        self.y = math.max(minY,math.min(self.y,maxY))
+    end
 end
 
 function Camera:getActiveTouches()
     local active = {}
-    for id, t in pairs(self.touches) do
-        table.insert(active, {
-            id = id,
-            x = t.x,
-            y = t.y
-        })
+    for id,t in pairs(self.touches) do
+        table.insert(active,{id = id,x = t.x,y = t.y})
     end
     return active
 end
 
 function Camera:touched(touch)
     if touch.state == BEGAN then
-        self.touches[touch.id] = {
-            x = touch.x,
-            y = touch.y
-        }
+        self.touches[touch.id] = {x = touch.x,y = touch.y}
     elseif touch.state == MOVING then
         if self.touches[touch.id] then
             self.touches[touch.id].x = touch.x
@@ -123,9 +118,7 @@ function Camera:touched(touch)
     if touch.state == ENDED or touch.state == CANCELLED then
         self.touches[touch.id] = nil
         local active = self:getActiveTouches()
-        if #active < 2 then
-            self:endPinch()
-        end
+        if #active < 2 then self:endPinch() end
         return
     end
     
@@ -137,16 +130,19 @@ function Camera:touched(touch)
         local dx = t2.x - t1.x
         local dy = t2.y - t1.y
         local distance = math.sqrt(dx * dx + dy * dy)
+        
         if not self.lastPinchDistance then
             self:beginPinch(distance)
         else
             self:updatePinch(distance)
         end
+        
         return
     end
     
     if #active == 1 then
         local t = active[1]
+        
         if self.lastPinchDistance then
             self:endPinch()
             self:beginPan(t)
@@ -160,83 +156,93 @@ end
 
 function Camera:drawWorld()
     pushMatrix()
-    translate(WIDTH / 2, HEIGHT / 2)
+    translate(WIDTH / 2,HEIGHT / 2)
     scale(self.zoom)
-    translate(-self.x, -self.y)
+    translate(-self.x,-self.y)
     noFill()
-    stroke(theme.fg.r, theme.fg.g, theme.fg.b, 128)
+    stroke(theme.fg.r,theme.fg.g,theme.fg.b,128)
     strokeWidth(8 / self.zoom)
+    
     local dashLength = 40
     local gapLength = 25
     local x = 0
+    
     while x < self.worldWidth do
-        line(x, 0, math.min(x + dashLength, self.worldWidth), 0)
-        line(x, self.worldHeight, math.min(x + dashLength, self.worldWidth), self.worldHeight)
+        line(x,0,math.min(x + dashLength,self.worldWidth),0)
+        line(x,self.worldHeight,math.min(x + dashLength,self.worldWidth),self.worldHeight)
         x = x + dashLength + gapLength
     end
+    
     local y = 0
+    
     while y < self.worldHeight do
-        line(0, y, 0, math.min(y + dashLength, self.worldHeight))
-        line(self.worldWidth, y, self.worldWidth, math.min(y + dashLength, self.worldHeight))
+        line(0,y,0,math.min(y + dashLength,self.worldHeight))
+        line(self.worldWidth,y,self.worldWidth,math.min(y + dashLength,self.worldHeight))
         y = y + dashLength + gapLength
     end
+    
     popMatrix()
 end
 
 function Camera:drawNeil(neil)
     if not neil.active then return end
+    
     pushMatrix()
-    translate(WIDTH / 2, HEIGHT / 2)
+    translate(WIDTH / 2,HEIGHT / 2)
     scale(self.zoom)
-    translate(-self.x, -self.y)
+    translate(-self.x,-self.y)
     neil:draw()
     popMatrix()
 end
 
 function Camera:drawNeilIndicator(neil)
     if not neil.active then return end
+    
     local pos = self:worldToScreen(neil.pos)
-    if pos.x >= 0 and
-    pos.x <= WIDTH and
-    pos.y >= 0 and
-    pos.y <= HEIGHT then
-        return
-    end
-    local center = vec2(WIDTH / 2, HEIGHT / 2)
+    
+    if pos.x >= 0 and pos.x <= WIDTH and pos.y >= 0 and pos.y <= HEIGHT then return end
+    
+    local center = vec2(WIDTH / 2,HEIGHT / 2)
     local direction = pos - center
+    
     if direction.lengthSqr == 0 then return end
+    
     local length = math.sqrt(direction.lengthSqr)
     direction = direction / length
+    
     local margin = 35
     local halfWidth = WIDTH / 2 - margin
     local halfHeight = HEIGHT / 2 - margin
     local scaleX = math.huge
     local scaleY = math.huge
-    if math.abs(direction.x) > 0 then
-        scaleX = halfWidth / math.abs(direction.x)
-    end
-    if math.abs(direction.y) > 0 then
-        scaleY = halfHeight / math.abs(direction.y)
-    end
-    local distance = math.min(scaleX, scaleY)
+    
+    if math.abs(direction.x) > 0 then scaleX = halfWidth / math.abs(direction.x) end
+    if math.abs(direction.y) > 0 then scaleY = halfHeight / math.abs(direction.y) end
+    
+    local distance = math.min(scaleX,scaleY)
     local arrowPos = center + direction * distance
     local arrowLength = 24
     local arrowWidth = 14
-    local perpendicular = vec2(-direction.y, direction.x)
+    local perpendicular = vec2(-direction.y,direction.x)
     local tip = arrowPos + direction * arrowLength / 2
     local left = arrowPos - direction * arrowLength / 2 + perpendicular * arrowWidth / 2
     local right = arrowPos - direction * arrowLength / 2 - perpendicular * arrowWidth / 2
+    
     resetMatrix()
-    stroke(theme.fg.r, theme.fg.g, theme.fg.b, 220)
+    
+    stroke(theme.fg.r,theme.fg.g,theme.fg.b,220)
     strokeWidth(3)
-    line(tip.x, tip.y, left.x, left.y)
-    line(left.x, left.y, right.x, right.y)
-    line(right.x, right.y, tip.x, tip.y)
+    
+    line(tip.x,tip.y,left.x,left.y)
+    line(left.x,left.y,right.x,right.y)
+    line(right.x,right.y,tip.x,tip.y)
 end
 
 function Camera:drawZoomIndicator()
     if self.zoom == 1 then return end
+    
     resetMatrix()
+    
     local x = WIDTH - self.zoomIndicatorMargin
     local centerY = HEIGHT - self.zoomIndicatorMargin - self.zoomIndicatorSize / 2
     local halfSize = self.zoomIndicatorSize / 2
@@ -245,15 +251,19 @@ function Camera:drawZoomIndicator()
     local range = self.maxZoom - self.minZoom
     local normalized = (self.zoom - self.minZoom) / range
     local indicatorY = maxY - normalized * self.zoomIndicatorSize
-    stroke(theme.fg.r, theme.fg.g, theme.fg.b, 100)
+    
+    stroke(theme.fg.r,theme.fg.g,theme.fg.b,100)
     strokeWidth(2)
-    line(x, minY, x, maxY)
-    line(x - 8, minY, x + 8, minY)
-    line(x - 8, maxY, x + 8, maxY)
+    
+    line(x,minY,x,maxY)
+    line(x - 8,minY,x + 8,minY)
+    line(x - 8,maxY,x + 8,maxY)
+    
     fill(theme.fg)
     noStroke()
-    ellipse(x, indicatorY, 12, 12)
+    ellipse(x,indicatorY,12,12)
+    
     fontSize(14)
     textAlign(RIGHT)
-    text(string.format("%.1fx", self.zoom), x - 20, indicatorY)
+    text(string.format("%.1fx",self.zoom),x - 20,indicatorY)
 end

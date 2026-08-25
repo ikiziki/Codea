@@ -19,7 +19,7 @@ end
 function LaunchState:draw()
     camera:drawWorld()
     camera:drawNeil(neil)
-    launcher:draw(neil.active)
+    launcher:draw(neil.active, neil.previousFlightTime)
     camera:drawZoomIndicator()
 end
 

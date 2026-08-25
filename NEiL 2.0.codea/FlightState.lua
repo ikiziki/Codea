@@ -16,6 +16,7 @@ function FlightState:update(dt)
     self.flightTime = math.floor((self.flightTime + dt) * 100) / 100
     neil:update(dt)
     if not neil.active then
+        neil.previousFlightTime = self.flightTime
         camera:reset()
         stateManager:load(launchState)
     end
