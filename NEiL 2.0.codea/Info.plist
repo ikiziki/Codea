@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Buffer Order</key>
+	<array>
+		<string>Main.lua</string>
+		<string>StateManager.lua</string>
+		<string>Camera.lua</string>
+		<string>Launcher.lua</string>
+		<string>NEiL.lua</string>
+		<string>Starfield.lua</string>
+		<string>LaunchState.lua</string>
+		<string>FlightState.lua</string>
+		<string>Theme.lua</string>
+		<string>Utilities.lua</string>
+	</array>
+	<key>ProjectID</key>
+	<string>AD99494E-7FF2-4701-9004-F03507F84E16</string>
+	<key>Runtime Type</key>
+	<string>modern</string>
+</dict>
+</plist>

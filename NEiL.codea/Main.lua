@@ -4,8 +4,8 @@
 function setup()
     viewer.mode = FULLSCREEN
     theme = ThemeEngine()
-    worldWidth = WIDTH * 2
-    worldHeight = HEIGHT * 2
+    worldWidth = WIDTH * 3
+    worldHeight = HEIGHT * 4
     starfield = Starfield()
     camera = Camera()
     launcher = Launcher()
@@ -129,11 +129,12 @@ function touched(touch)
         
         if touch.state == BEGAN then
             if not neil.active and not launcher.active and t.y <= HEIGHT / 4 then
+                camera:reset()
                 if launcher:touchBegan(touch, neil.active) then
                     launcherTouchID = touch.id
                 end
             else
-                cameraTouchID = touch.id
+                cameraTouchID = t.id
                 camera:beginPan(touch)
             end
         elseif touch.state == MOVING then

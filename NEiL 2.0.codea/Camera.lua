@@ -2,6 +2,7 @@
 -- chris geese @ 2026
 
 Camera = class("Camera")
+
 function Camera:init()
     self.worldWidth = WIDTH * 3
     self.worldHeight = HEIGHT * 4
@@ -9,14 +10,15 @@ function Camera:init()
     self.y = HEIGHT * 0.5
     self.zoom = 1
     self.zoomSpeed = 0.002
-    self.minZoom = 0.5
+    self.minZoom = 0.25
     self.maxZoom = 2
+    self.cameraMargin = 0.1
     self.lastTouchX = 0
     self.lastTouchY = 0
     self.lastPinchDistance = nil
+    self.touches = {}
     self.zoomIndicatorSize = 70
     self.zoomIndicatorMargin = 25
-    self.cameraMargin = 0.1
 end
 
 function Camera:screenToWorld(pos)
@@ -75,13 +77,14 @@ function Camera:reset()
     self.lastTouchX = 0
     self.lastTouchY = 0
     self.lastPinchDistance = nil
+    self.touches = {}
 end
 
 function Camera:clamp()
     local halfWidth = WIDTH / (2 * self.zoom)
     local halfHeight = HEIGHT / (2 * self.zoom)
-    local marginX = WIDTH * 0.1 / self.zoom
-    local marginY = HEIGHT * 0.1 / self.zoom
+    local marginX = WIDTH * self.cameraMargin / self.zoom
+    local marginY = HEIGHT * self.cameraMargin / self.zoom
     self.x = math.max(
     halfWidth - marginX,
     math.min(self.x, self.worldWidth - halfWidth + marginX)
@@ -90,6 +93,69 @@ function Camera:clamp()
     halfHeight - marginY,
     math.min(self.y, self.worldHeight - halfHeight + marginY)
     )
+end
+
+function Camera:getActiveTouches()
+    local active = {}
+    for id, t in pairs(self.touches) do
+        table.insert(active, {
+            id = id,
+            x = t.x,
+            y = t.y
+        })
+    end
+    return active
+end
+
+function Camera:touched(touch)
+    if touch.state == BEGAN then
+        self.touches[touch.id] = {
+            x = touch.x,
+            y = touch.y
+        }
+    elseif touch.state == MOVING then
+        if self.touches[touch.id] then
+            self.touches[touch.id].x = touch.x
+            self.touches[touch.id].y = touch.y
+        end
+    end
+    
+    if touch.state == ENDED or touch.state == CANCELLED then
+        self.touches[touch.id] = nil
+        local active = self:getActiveTouches()
+        if #active < 2 then
+            self:endPinch()
+        end
+        return
+    end
+    
+    local active = self:getActiveTouches()
+    
+    if #active >= 2 then
+        local t1 = active[1]
+        local t2 = active[2]
+        local dx = t2.x - t1.x
+        local dy = t2.y - t1.y
+        local distance = math.sqrt(dx * dx + dy * dy)
+        if not self.lastPinchDistance then
+            self:beginPinch(distance)
+        else
+            self:updatePinch(distance)
+        end
+        return
+    end
+    
+    if #active == 1 then
+        local t = active[1]
+        if self.lastPinchDistance then
+            self:endPinch()
+            self:beginPan(t)
+        elseif touch.state == BEGAN then
+            self:beginPan(touch)
+        elseif touch.state == MOVING then
+            self:updatePan(touch)
+        end
+    end
 end
 
 function Camera:drawWorld()
@@ -129,55 +195,40 @@ end
 
 function Camera:drawNeilIndicator(neil)
     if not neil.active then return end
-    
     local pos = self:worldToScreen(neil.pos)
-    
     if pos.x >= 0 and
     pos.x <= WIDTH and
     pos.y >= 0 and
     pos.y <= HEIGHT then
         return
     end
-    
     local center = vec2(WIDTH / 2, HEIGHT / 2)
     local direction = pos - center
-    
     if direction.lengthSqr == 0 then return end
-    
     local length = math.sqrt(direction.lengthSqr)
     direction = direction / length
-    
     local margin = 35
     local halfWidth = WIDTH / 2 - margin
     local halfHeight = HEIGHT / 2 - margin
-    
     local scaleX = math.huge
     local scaleY = math.huge
-    
     if math.abs(direction.x) > 0 then
         scaleX = halfWidth / math.abs(direction.x)
     end
-    
     if math.abs(direction.y) > 0 then
         scaleY = halfHeight / math.abs(direction.y)
     end
-    
     local distance = math.min(scaleX, scaleY)
     local arrowPos = center + direction * distance
-    
     local arrowLength = 24
     local arrowWidth = 14
     local perpendicular = vec2(-direction.y, direction.x)
-    
     local tip = arrowPos + direction * arrowLength / 2
     local left = arrowPos - direction * arrowLength / 2 + perpendicular * arrowWidth / 2
     local right = arrowPos - direction * arrowLength / 2 - perpendicular * arrowWidth / 2
-    
     resetMatrix()
-    
     stroke(theme.fg.r, theme.fg.g, theme.fg.b, 220)
     strokeWidth(3)
-    
     line(tip.x, tip.y, left.x, left.y)
     line(left.x, left.y, right.x, right.y)
     line(right.x, right.y, tip.x, tip.y)
@@ -185,33 +236,24 @@ end
 
 function Camera:drawZoomIndicator()
     if self.zoom == 1 then return end
-    
     resetMatrix()
-    
     local x = WIDTH - self.zoomIndicatorMargin
     local centerY = HEIGHT - self.zoomIndicatorMargin - self.zoomIndicatorSize / 2
     local halfSize = self.zoomIndicatorSize / 2
-    
     local minY = centerY - halfSize
     local maxY = centerY + halfSize
-    
     local range = self.maxZoom - self.minZoom
     local normalized = (self.zoom - self.minZoom) / range
     local indicatorY = maxY - normalized * self.zoomIndicatorSize
-    
     stroke(theme.fg.r, theme.fg.g, theme.fg.b, 100)
     strokeWidth(2)
-    
     line(x, minY, x, maxY)
     line(x - 8, minY, x + 8, minY)
     line(x - 8, maxY, x + 8, maxY)
-    
     fill(theme.fg)
     noStroke()
     ellipse(x, indicatorY, 12, 12)
-    
-    fill(theme.fg)
     fontSize(14)
-    textAlign(CENTER)
-    text(string.format("%.1fx", self.zoom), x - 25, indicatorY + 6)
+    textAlign(RIGHT)
+    text(string.format("%.1fx", self.zoom), x - 20, indicatorY)
 end

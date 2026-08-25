@@ -1,7 +1,8 @@
--- Starfield for NEiL
+-- simple starfield animation BL => TR
 -- chris geese @ 2026
 
 Star = class("Star")
+
 function Star:init(maxSpeed, maxSize)
     self.x = rX()
     self.y = rY()
@@ -30,6 +31,7 @@ function Star:draw()
 end
 
 Starfield = class("Starfield")
+
 function Starfield:init()
     self.count = 250
     self.maxSpeed = 5
