@@ -11,6 +11,7 @@
 		<string>MenuState.lua</string>
 		<string>LaunchState.lua</string>
 		<string>FlightState.lua</string>
+		<string>GameOverState.lua</string>
 		<string>Camera.lua</string>
 		<string>Launcher.lua</string>
 		<string>NEiL.lua</string>

@@ -12,6 +12,7 @@ function setup()
     stateManager = StateManager()
     launchState = LaunchState()
     flightState = FlightState()
+    gameOverState = GameOverState()
     stateManager:load(LaunchState())
 end
 
