@@ -1,7 +1,7 @@
 -- Game Over State for NEiL
 -- chris geese @ 2026
 
-GameOverState = class("GameOverState")
+GameOverState = class("GameOverState", BaseState)
 
 function GameOverState:init()
 end

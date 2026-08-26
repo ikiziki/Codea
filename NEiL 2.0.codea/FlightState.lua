@@ -1,7 +1,7 @@
 -- Flight State for NEiL
 -- chris geese @ 2026
 
-FlightState = class("FlightState")
+FlightState = class("FlightState", BaseState)
 
 function FlightState:init()
     self.flightTime = 0

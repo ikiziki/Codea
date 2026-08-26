@@ -1,7 +1,7 @@
 -- Launch State for NEiL
 -- chris geese @ 2026
 
-LaunchState = class("LaunchState")
+LaunchState = class("LaunchState", BaseState)
 
 function LaunchState:init()
     self.launcherTouchID = nil
