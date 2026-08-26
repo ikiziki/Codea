@@ -23,7 +23,6 @@ end
 
 function draw()
     background(theme.bg)
-    starfield:draw()
     stateManager:draw()
 end
 

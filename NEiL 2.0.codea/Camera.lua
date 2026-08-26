@@ -20,6 +20,11 @@ function Camera:init()
     self.touches = {}
     self.zoomIndicatorSize = 70
     self.zoomIndicatorMargin = 25
+    self.following = false
+    self.followTarget = nil
+    self.followDelay = 3
+    self.followTimer = 0
+    self.panActive = false
 end
 
 function Camera:screenToWorld(pos)
@@ -30,7 +35,50 @@ function Camera:worldToScreen(pos)
     return vec2(WIDTH / 2 + (pos.x - self.x) * self.zoom,HEIGHT / 2 + (pos.y - self.y) * self.zoom)
 end
 
+function Camera:follow(target)
+    self.following = true
+    self.followTarget = target
+    self.followTimer = 0
+    self.panActive = false
+    if target then
+        self.x = target.pos.x
+        self.y = target.pos.y
+        self:clamp()
+    end
+end
+
+function Camera:updateFollow(dt)
+    if self.following then
+        if self.followTarget then
+            self.x = self.followTarget.pos.x
+            self.y = self.followTarget.pos.y
+            self:clamp()
+        end
+        return
+    end
+    
+    if not self.followTarget then return end
+    if self.panActive then return end
+    
+    self.followTimer = self.followTimer + dt
+    
+    if self.followTimer >= self.followDelay then
+        self.following = true
+        self.followTimer = 0
+        self.x = self.followTarget.pos.x
+        self.y = self.followTarget.pos.y
+        self:clamp()
+    end
+end
+
+function Camera:stopFollow()
+    self.following = false
+    self.followTimer = 0
+end
+
 function Camera:beginPan(touch)
+    self.panActive = true
+    self.followTimer = 0
     self.lastTouchX = touch.x
     self.lastTouchY = touch.y
 end
@@ -38,6 +86,11 @@ end
 function Camera:updatePan(touch)
     local dx = touch.x - self.lastTouchX
     local dy = touch.y - self.lastTouchY
+    
+    if dx ~= 0 or dy ~= 0 then
+        self:stopFollow()
+    end
+    
     self.x = self.x - dx / self.zoom
     self.y = self.y - dy / self.zoom
     self:clamp()
@@ -54,6 +107,7 @@ function Camera:updatePinch(distance)
         self.lastPinchDistance = distance
         return
     end
+    
     local change = distance - self.lastPinchDistance
     self.zoom = self.zoom + change * self.zoomSpeed
     self.zoom = math.max(self.minZoom,math.min(self.zoom,self.maxZoom))
@@ -73,6 +127,10 @@ function Camera:reset()
     self.lastTouchY = 0
     self.lastPinchDistance = nil
     self.touches = {}
+    self.following = false
+    self.followTarget = nil
+    self.followTimer = 0
+    self.panActive = false
 end
 
 function Camera:clamp()
@@ -85,11 +143,13 @@ function Camera:clamp()
     local maxX = self.worldWidth - halfWidth + marginWidth
     local minY = halfHeight - marginHeight
     local maxY = self.worldHeight - halfHeight + marginHeight
+    
     if minX > maxX then
         self.x = self.worldWidth / 2
     else
         self.x = math.max(minX,math.min(self.x,maxX))
     end
+    
     if minY > maxY then
         self.y = self.worldHeight / 2
     else
@@ -118,7 +178,16 @@ function Camera:touched(touch)
     if touch.state == ENDED or touch.state == CANCELLED then
         self.touches[touch.id] = nil
         local active = self:getActiveTouches()
-        if #active < 2 then self:endPinch() end
+        
+        if #active < 2 then
+            self:endPinch()
+        end
+        
+        if #active == 0 and self.panActive then
+            self.panActive = false
+            self.followTimer = 0
+        end
+        
         return
     end
     
@@ -243,7 +312,7 @@ function Camera:drawZoomIndicator()
     
     resetMatrix()
     
-    local x = WIDTH - self.zoomIndicatorMargin
+    local x = WIDTH - self.zoomIndicatorMargin - 10
     local centerY = HEIGHT - self.zoomIndicatorMargin - self.zoomIndicatorSize / 2
     local halfSize = self.zoomIndicatorSize / 2
     local minY = centerY - halfSize

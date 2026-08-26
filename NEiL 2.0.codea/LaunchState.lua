@@ -5,6 +5,7 @@ LaunchState = class("LaunchState")
 
 function LaunchState:init()
     self.launcherTouchID = nil
+    self.previousFlightTime = 0
 end
 
 function LaunchState:enter()
@@ -17,10 +18,19 @@ function LaunchState:update(dt)
 end
 
 function LaunchState:draw()
+    starfield:draw()
     camera:drawWorld()
     camera:drawNeil(neil)
-    launcher:draw(neil.active, neil.previousFlightTime)
+    launcher:draw(neil.active)
     camera:drawZoomIndicator()
+    resetMatrix()
+    fill(theme.fg)
+    noStroke()
+    textAlign(CENTER)
+    fontSize(16)
+    text("PREVIOUS FLIGHT TIME",WIDTH / 2,HEIGHT / 4 - 30)
+    fontSize(20)
+    text(string.format("%.2f",self.previousFlightTime),WIDTH / 2,HEIGHT / 4 - 55)
 end
 
 function LaunchState:touched(touch)
@@ -47,7 +57,7 @@ function LaunchState:touched(touch)
     
     if touch.state == ENDED or touch.state == CANCELLED then
         if self.launcherTouchID == touch.id then
-            local velocity = vec2(0, 0)
+            local velocity = vec2(0,0)
             if touch.state == ENDED then
                 velocity = launcher:touchEnded(touch)
             else
