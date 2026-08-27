@@ -31,9 +31,19 @@ function rX()
     return math.random(0, WIDTH)
 end
 
+-- returns a random integer between 0 and 3x width
+function rX3()
+    return math.random(0, (WIDTH*3))
+end
+
 -- rwturns a random integer between 0 and height
 function rY()
     return math.random(0, HEIGHT)
+end
+
+-- returns a random integer between 0 and 4x height
+function rY4()
+    return math.random(0, (HEIGHT*4))
 end
 
 -- rerurns a floored vec2
