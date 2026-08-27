@@ -7,10 +7,12 @@ function tutorialState:enter()
 end
 
 function tutorialState:update(dt)
+    game.sf:update(dt)
 end
 
 function tutorialState:draw()
     background(game.theme.bg)
+    game.sf:draw()
 end
 
 function tutorialState:exit()

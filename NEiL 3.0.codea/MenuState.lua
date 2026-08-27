@@ -1,6 +1,5 @@
 MenuState = class("MenuState", BaseState)
 function MenuState:init()
-    self.starfield = Starfield()
     self.buttons = {
         {y = HEIGHT/2+150, w = 225, h = 75, label = "New Game", fontSize = 32, action = function() self:onNewGame() end},
         {y = HEIGHT/2,     w = 225, h = 75, label = "Continue", fontSize = 32, action = function() self:onContinue() end},
@@ -14,12 +13,12 @@ end
 
 function MenuState:update(dt)
     game.theme:update()
-    self.starfield:update(dt)
+    game.sf:update(dt)
 end
 
 function MenuState:draw()
     background(game.theme.bg)
-    self.starfield:draw()
+    game.sf:draw()
     self:drawTitle()
     self:drawButtons()
 end
