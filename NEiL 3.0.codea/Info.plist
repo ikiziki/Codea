@@ -11,8 +11,8 @@
 		<string>BaseState.lua</string>
 		<string>MenuState.lua</string>
 		<string>StarField.lua</string>
-		<string>World.lua</string>
 		<string>TutorialState.lua</string>
+		<string>World.lua</string>
 		<string>Utilities.lua</string>
 	</array>
 	<key>ProjectID</key>

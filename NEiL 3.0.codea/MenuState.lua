@@ -5,7 +5,7 @@ function MenuState:init()
         {y = HEIGHT/2+150, w = 225, h = 75, label = "New Game", fontSize = 32, action = function() self:onNewGame() end},
         {y = HEIGHT/2,     w = 225, h = 75, label = "Continue", fontSize = 32, action = function() self:onContinue() end},
         {y = HEIGHT/2-150, w = 225, h = 75, label = "Tutorial", fontSize = 32, action = function() self:onTutorial() end},
-        {y = HEIGHT/2-325, w = 125, h = 50, label = "Credits",  fontSize = 32, action = function() self:onCredits() end},
+        {y = HEIGHT/2-310, w = 125, h = 50, label = "Credits",  fontSize = 32, action = function() self:onCredits() end},
     }
 end
 
@@ -75,7 +75,7 @@ function MenuState:onContinue()
 end
 
 function MenuState:onTutorial()
-    print("tutorial")
+    game.sm:enter(tutorialState())
 end
 
 function MenuState:onCredits()
