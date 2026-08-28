@@ -4,7 +4,6 @@ function tutorialState:init()
 end
 
 function tutorialState:enter()
-    print("Welcome to the tutorial")
 end
 
 function tutorialState:update(dt)
