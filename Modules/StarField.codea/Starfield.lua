@@ -3,10 +3,10 @@
 
 Star = class("Star")
 function Star:init(maxSpeed, maxSize)
-    self.x = rX()
-    self.y = rY()
-    self.v = rInt(1, maxSpeed)
-    self.size = rInt(1, maxSize)  
+    self.x = math.random(0, WIDTH)
+    self.y = math.random(0, HEIGHT)
+    self.v = math.random(1, maxSpeed)
+    self.size = math.random(1, maxSize)  
     self.scalar = 10
 end
 
