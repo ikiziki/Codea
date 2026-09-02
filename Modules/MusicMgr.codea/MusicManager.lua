@@ -5,7 +5,6 @@ MusicManager = class("MusicManager")
 
 function MusicManager:init()
     self.current = nil
-    print("Music Manager Loaded")
 end
 
 function MusicManager:play(track, loop)

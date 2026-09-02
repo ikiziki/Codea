@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Buffer Order</key>
+	<array>
+		<string>Camera.lua</string>
+	</array>
+	<key>ProjectID</key>
+	<string>AD99494E-7FF2-4701-9004-F03507F84E16</string>
+	<key>Runtime Type</key>
+	<string>modern</string>
+	<key>Tint Color</key>
+	<data>
+	YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMS
+	AAGGoF8QD05TS2V5ZWRBcmNoaXZlctEICVRyb290gAGjCwwcVSRudWxs2A0ODxAREhMU
+	FRYXGBkaGBtfEBVVSUNvbG9yQ29tcG9uZW50Q291bnRXVUlHcmVlblZVSUJsdWVXVUlB
+	bHBoYVVOU1JHQlYkY2xhc3NVVUlSZWRcTlNDb2xvclNwYWNlEAQiPsLCACI/fv4AIgAA
+	AABOMCAwLjM4IDAuOTk2IDCAAhAC0x0eHyAhI1okY2xhc3NuYW1lWCRjbGFzc2VzWyRj
+	bGFzc2hpbnRzV1VJQ29sb3KiICJYTlNPYmplY3ShJFdOU0NvbG9yAAgAEQAaACQAKQAy
+	ADcASQBMAFEAUwBXAF0AbgCGAI4AlQCdAKMAqgCwAL0AvwDEAMkAzgDdAN8A4QDoAPMA
+	/AEIARABEwEcAR4AAAAAAAACAQAAAAAAAAAlAAAAAAAAAAAAAAAAAAABJg==
+	</data>
+</dict>
+</plist>
