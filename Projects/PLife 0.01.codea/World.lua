@@ -45,7 +45,10 @@ end
 function World:interact(atom,dt)
     local x = atom.pos.x
     local y = atom.pos.y
-    local radius = atom.interactionRadius
+    local radius = math.max(
+    atom.interactionRadius,
+    atom.repulsionRadius
+    )
     local nearby = self.nearby
     local count = self.grid:query(x,y,radius,nearby)
     local matrix = rules.matrix
@@ -60,6 +63,13 @@ function World:interact(atom,dt)
             local distSq = dx * dx + dy * dy
             
             if distSq > 0 then
+                
+                -- Universal repulsion
+                if distSq < atom.repulsionRadius * atom.repulsionRadius then
+                    atom:repel(other,dt)
+                end
+                
+                -- Type-based interaction
                 local rule = matrix[type][other.type]
                 
                 if rule ~= 0 then

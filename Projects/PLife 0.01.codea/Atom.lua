@@ -8,8 +8,27 @@ function Atom:init(type,pos)
     self.pos = pos or vec2(math.random(WIDTH),math.random(HEIGHT))
     self.vel = vec2(0,0)
     self.radius = 5
+    self.repulsionRadius = 50
+    self.repulsionStrength = 100
     self.interactionRadius = 100
     self.maxSpeed = 200
+end
+
+function Atom:repel(other,dt)
+    local dx = self.pos.x - other.pos.x
+    local dy = self.pos.y - other.pos.y
+    local distSq = dx * dx + dy * dy
+    
+    if distSq == 0 or distSq > self.repulsionRadius * self.repulsionRadius then
+        return
+    end
+    
+    local dist = math.sqrt(distSq)
+    local strength = (self.repulsionRadius - dist) / self.repulsionRadius
+    local force = strength * self.repulsionStrength * dt
+    
+    self.vel.x = self.vel.x + dx / dist * force
+    self.vel.y = self.vel.y + dy / dist * force
 end
 
 function Atom:limitSpeed()
