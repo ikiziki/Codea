@@ -1,5 +1,8 @@
 viewer.mode = FULLSCREEN
 
+showGrid = false
+showHeatmap = false
+
 rules = {
     AA=0,AB=0,AC=0,AD=0,AE=0,AF=0,AG=0,
     BA=0,BB=0,BC=0,BD=0,BE=0,BF=0,BG=0,
@@ -52,6 +55,8 @@ function randomizeRules()
     updateRules()
 end
 
+parameter.boolean("showGrid")
+parameter.boolean("showHeatmap")
 parameter.action("Randomize", randomizeRules)
 parameter.action("Reset", resetRules)
 

@@ -3,6 +3,7 @@
 
 function setup()
     world = World()
+    cam = Camera(world)
 end
 
 function update(dt)
@@ -10,7 +11,9 @@ function update(dt)
 end
 
 function draw()
+    cam:apply()
     world:draw()
+    cam:remove()
 end
 
 function touched(touch)
