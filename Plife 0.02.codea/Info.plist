@@ -5,12 +5,6 @@
 	<key>Buffer Order</key>
 	<array>
 		<string>Main.lua</string>
-		<string>World.lua</string>
-		<string>Atom.lua</string>
-		<string>Camera.lua</string>
-		<string>Grid.lua</string>
-		<string>Theme.lua</string>
-		<string>Rules.lua</string>
 	</array>
 	<key>ProjectID</key>
 	<string>AD99494E-7FF2-4701-9004-F03507F84E16</string>
