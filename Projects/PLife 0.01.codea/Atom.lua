@@ -7,7 +7,7 @@ function Atom:init(type,pos)
     self.type = type or math.random(5)
     self.pos = pos or vec2(math.random(WIDTH),math.random(HEIGHT))
     self.vel = vec2(0,0)
-    self.radius = 5
+    self.radius = 3
     self.repulsionRadius = 50
     self.repulsionStrength = 100
     self.interactionRadius = 100
