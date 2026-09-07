@@ -3,7 +3,6 @@
 
 function setup()
     world = World()
-    cam = Camera(world)
 end
 
 function update(dt)

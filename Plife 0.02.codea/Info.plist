@@ -7,6 +7,9 @@
 		<string>Main.lua</string>
 		<string>World.lua</string>
 		<string>Camera.lua</string>
+		<string>Grid.lua</string>
+		<string>Atom.lua</string>
+		<string>Rules.lua</string>
 		<string>Theme.lua</string>
 	</array>
 	<key>ProjectID</key>
