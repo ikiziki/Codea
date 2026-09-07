@@ -1,6 +1,3 @@
--- a class for handling system themes
--- chris geese @ 2026
-
 ThemeEngine = class("ThemeEngine")
 
 function ThemeEngine:init()
