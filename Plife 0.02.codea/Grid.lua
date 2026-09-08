@@ -61,7 +61,7 @@ end
 
 function Grid:drawGrid(strokeColor)
     stroke(strokeColor or 255)
-    strokeWidth(3)
+    strokeWidth(1)
     noFill()
     for x = 0,self.cols do
         local px = x * self.cellSize

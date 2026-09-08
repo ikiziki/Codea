@@ -3,7 +3,9 @@ Atom = class("Atom")
 function Atom:init(world)
     self.world = world
     self.pos = vec2(math.random(world.width), math.random(world.height))
-    self.vel = vec2(0, 0)
+    local angle = math.random() * math.pi * 2
+    local speed = math.random(20, 50)
+    self.vel = vec2(math.cos(angle), math.sin(angle)) * speed
     self.species = math.random(1, 7)
 end
 
