@@ -17,12 +17,25 @@ function World:init()
 end
 
 function World:update(dt)
+    self.grid:clear()
+    
+    for i = 1,#self.atoms do
+        self.grid:insert(self.atoms[i])
+    end
 end
 
 function World:draw()
     background(self.theme.bg)
     
     self.camera:apply()
+    
+    if showGrid then
+        self.grid:drawGrid(self.theme.fg)
+    end
+    
+    if showHeatmap then
+        self.grid:drawHeatmap()
+    end
     
     for i = 1,#self.atoms do
         self.atoms[i]:draw()

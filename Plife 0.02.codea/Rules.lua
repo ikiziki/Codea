@@ -64,6 +64,7 @@ end
 
 parameter.boolean("showGrid")
 parameter.boolean("showHeatmap")
+parameter.number("InteractionRange", 10, 100, 30)
 parameter.action("Randomize",randomizeRules)
 parameter.action("Reset",resetRules)
 
