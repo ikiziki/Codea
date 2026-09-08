@@ -8,55 +8,37 @@ function World:init()
     self.grid = Grid(self)
     self.atoms = {}
     
-    for i = 1,500 do
-        self.atoms[#self.atoms + 1] = Atom(self)
+    for i = 1,1000 do
+        local atom = Atom(self)
+        atom.id = i
+        self.atoms[i] = atom
     end
 end
 
 function World:update(dt)
-    self.grid:clear()
-    
-    for i = 1, #self.atoms do
-        self.grid:insert(self.atoms[i])
+    local atoms = self.atoms
+    local grid = self.grid
+    local count = #atoms
+    grid:clear()
+    for i = 1,count do
+        grid:insert(atoms[i])
     end
-    
-    for i = 1, #self.atoms do
-        self:repel(self.atoms[i], dt)
+    for i = 1,count do
+        grid:repel(atoms[i], dt)
     end
-    
-    for i = 1, #self.atoms do
-        self.atoms[i]:update(dt)
-    end
-end
-
-function World:repel(atom, dt)
-    local nearby = self.grid:query(atom.pos, InteractionRange)
-    
-    for i = 1,#nearby do
-        local other = nearby[i]
-        
-        if other ~= atom then
-            local delta = atom.pos - other.pos
-            local distance = delta.length
-            
-            if distance > 0 and distance < InteractionRange then
-                local force = RepulsionStrength *
-                (1 - distance / InteractionRange)
-                
-                atom.vel = atom.vel +
-                delta:normalize() * force * dt
-            end
-        end
+    for i = 1,count do
+        atoms[i]:update(dt)
     end
 end
 
 function World:draw()
     self.theme:update()
     background(self.theme.bg)
-    self.camera:apply()
     
-    for i = 1,#self.atoms do
-        self.atoms[i]:draw()
+    self.camera:apply() 
+    local atoms = self.atoms
+    for i = 1,#atoms do
+        atoms[i]:draw()
     end
     if showGrid then
         self.grid:drawGrid(self.theme.fg)
@@ -64,7 +46,6 @@ function World:draw()
     if showHeatmap then
         self.grid:drawHeatmap()
     end
-    
     self.camera:remove()
 end
 

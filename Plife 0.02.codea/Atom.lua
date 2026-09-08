@@ -10,12 +10,10 @@ function Atom:init(world)
 end
 function Atom:update(dt)
     self.pos = self.pos + self.vel * dt
-    
     if self.pos.x <= self.radius or
     self.pos.x >= self.world.width - self.radius then
         self.vel.x = -self.vel.x
     end
-    
     if self.pos.y <= self.radius or
     self.pos.y >= self.world.height - self.radius then
         self.vel.y = -self.vel.y

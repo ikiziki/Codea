@@ -41,7 +41,6 @@ local function resetRules()
     for a = 1,7 do
         for b = 1,7 do
             local name = names[a]..names[b]
-            
             _G[name] = 0
             rules[name] = 0
             rules.matrix[a][b] = 0
@@ -54,7 +53,6 @@ local function randomizeRules()
         for b = 1,7 do
             local name = names[a]..names[b]
             local value = math.random(-10,10) * 0.1
-            
             _G[name] = value
             rules[name] = value
             rules.matrix[a][b] = value
