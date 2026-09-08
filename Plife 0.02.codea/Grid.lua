@@ -40,17 +40,18 @@ function Grid:insert(atom)
     cell[#cell + 1] = atom
 end
 
-function Grid:query(pos, radius)
+function Grid:query(pos)
     local results = {}
     
-    local minX = math.max(1, math.floor((pos.x - radius) / self.cellSize) + 1)
-    local maxX = math.min(self.cols, math.floor((pos.x + radius) / self.cellSize) + 1)
-    local minY = math.max(1, math.floor((pos.y - radius) / self.cellSize) + 1)
-    local maxY = math.min(self.rows, math.floor((pos.y + radius) / self.cellSize) + 1)
+    local minX = math.max(1, math.floor((pos.x - InteractionRange) / self.cellSize) + 1)
+    local maxX = math.min(self.cols, math.floor((pos.x + InteractionRange) / self.cellSize) + 1)
+    local minY = math.max(1, math.floor((pos.y - InteractionRange) / self.cellSize) + 1)
+    local maxY = math.min(self.rows, math.floor((pos.y + InteractionRange) / self.cellSize) + 1)
     
     for x = minX,maxX do
         for y = minY,maxY do
             local cell = self.cells[x][y]
+            
             for i = 1,#cell do
                 results[#results + 1] = cell[i]
             end
@@ -58,6 +59,7 @@ function Grid:query(pos, radius)
     end
     return results
 end
+
 
 function Grid:drawGrid(strokeColor)
     stroke(strokeColor or 255)
