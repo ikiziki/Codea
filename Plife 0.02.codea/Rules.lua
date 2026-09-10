@@ -62,7 +62,9 @@ end
 
 parameter.boolean("showGrid")
 parameter.boolean("showHeatmap")
+parameter.number("MaxSpeed", 1, 500, 100)
 parameter.number("InteractionRange", 10, 100, 30)
+parameter.number("InteractionStrength", 1, 300, 100)
 parameter.number("RepulsionRange", 1, 100, 40)
 parameter.number("RepulsionStrength", 1, 300, 100)
 parameter.action("Randomize",randomizeRules)

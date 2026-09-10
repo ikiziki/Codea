@@ -9,16 +9,25 @@ function Atom:init(world)
     self.species = math.random(1, 7)
 end
 function Atom:update(dt)
+    local speed = self.vel.length
+    
+    if speed > MaxSpeed then
+        self.vel = self.vel / speed * MaxSpeed
+    end
+    
     self.pos = self.pos + self.vel * dt
+    
     if self.pos.x <= self.radius or
     self.pos.x >= self.world.width - self.radius then
         self.vel.x = -self.vel.x
     end
+    
     if self.pos.y <= self.radius or
     self.pos.y >= self.world.height - self.radius then
         self.vel.y = -self.vel.y
     end
 end
+
 function Atom:draw()
     fill(self.world.theme.species[self.species])
     ellipse(self.pos.x, self.pos.y, self.radius * 2) 
