@@ -124,7 +124,7 @@ function Grid:drawHeatmap()
         for y = 1,self.rows do
             local count = column[y].n
             if count > 0 then
-                fill(255, 255, 255, count / maxCount * 180)
+                fill(255, 0, 0, count / maxCount * 60)
                 rect((x - 1) * cellSize, (y - 1) * cellSize, cellSize, cellSize)
             end
         end
