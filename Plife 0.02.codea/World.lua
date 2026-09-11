@@ -8,7 +8,7 @@ function World:init()
     self.grid = Grid(self)
     self.atoms = {}
     
-    for i = 1,1000 do
+    for i = 1,1500 do
         local atom = Atom(self)
         atom.id = i
         self.atoms[i] = atom
@@ -97,21 +97,6 @@ function World:interact(atom, dt)
                         local nx = dx * inverseDistance
                         local ny = dy * inverseDistance
                         
-                        -- Universal repulsion
-                        if distance2 < repelRange2 then
-                            local strength = RepulsionStrength *
-                            (1 - distance / repelRange) * dt
-                            
-                            local fx = nx * strength
-                            local fy = ny * strength
-                            
-                            vel.x = vel.x + fx
-                            vel.y = vel.y + fy
-                            
-                            other.vel.x = other.vel.x - fx
-                            other.vel.y = other.vel.y - fy
-                        end
-                        
                         -- Species interactions
                         if distance2 < interactionRange2 then
                             local rule = rules.matrix[atom.species][other.species]
@@ -120,6 +105,7 @@ function World:interact(atom, dt)
                             if rule ~= 0 then
                                 local strength = rule *
                                 InteractionStrength *
+                                InteractionMultiplier *
                                 (1 - distance / interactionRange) * dt
                                 
                                 vel.x = vel.x - nx * strength
@@ -129,11 +115,28 @@ function World:interact(atom, dt)
                             if otherRule ~= 0 then
                                 local strength = otherRule *
                                 InteractionStrength *
+                                InteractionMultiplier *
                                 (1 - distance / interactionRange) * dt
                                 
                                 other.vel.x = other.vel.x + nx * strength
                                 other.vel.y = other.vel.y + ny * strength
                             end
+                        end
+                        
+                        -- Universal repulsion
+                        if distance2 < repelRange2 then
+                            local ratio = 1 - distance / repelRange
+                            local strength = RepulsionStrength *
+                            ratio * ratio * dt
+                            
+                            local fx = nx * strength
+                            local fy = ny * strength
+                            
+                            vel.x = vel.x + fx
+                            vel.y = vel.y + fy
+                            
+                            other.vel.x = other.vel.x - fx
+                            other.vel.y = other.vel.y - fy
                         end
                     end
                 end
